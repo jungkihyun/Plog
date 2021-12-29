@@ -1,0 +1,539 @@
+/*
+color : #2ecc71
+*/
+
+.sidebar-brand-icon img {
+    width: 2rem;
+}
+
+.dropdown .dropdown-menu .dropdown-header-custom {
+    font-weight: 800;
+    font-size: 1rem;;
+}
+
+.nav-item .nav-link .nav-icon-img {
+    width: 1.2rem;
+}
+
+.card-body .board-title {
+    border-bottom: 1px solid #e4e4e4;
+    margin: 0.25rem 0!important;
+    padding: 0.25rem 0!important;
+}
+
+.card-body p>a, td>a, .board-spec-func>a, .writer-sec {
+    display: inline-block;
+    color: #6e707e!important;
+    vertical-align: middle;
+}
+
+.card-body p>a:hover, td>a:hover, .board-spec-func>a:hover {
+    color:#2ecc71!important;
+}
+
+.none-data {
+    color: #6e707e!important;
+    padding: 9.4rem 0!important;
+    text-align: center;
+}
+
+.reply-mark {
+    width: 0.8rem;
+    margin: 0.25rem!important;
+}
+
+.font-size-1 {
+    font-size: 0.5rem;
+}
+.font-size-2 {
+    font-size: 0.6rem;
+}
+.font-size-3 {
+    font-size: 0.7rem;
+}
+.font-size-4 {
+    font-size: 0.8rem;
+}
+.font-size-5 {
+    font-size: 0.9rem;
+}
+
+.container-fluid .subhead {
+    float: left;
+}
+
+.container-fluid .subhead-explane {
+    padding: 1.1rem;
+    font-size: 0.7rem;
+}
+
+.card-body .table-responsive table thead .check {
+    width: 1%;
+    text-align: center;
+}
+
+.card-body .table-responsive table thead .boardName {
+    width: 10%;
+    text-align: center;
+}
+.card-body .table-responsive table thead .title {
+    width: 60%;
+    text-align: center;
+}
+.card-body .table-responsive table thead .writer {
+    width: 10%;
+    text-align: center;
+}
+.card-body .table-responsive table thead .voteNum {
+    width: 5%;
+    text-align: center;
+}
+.card-body .table-responsive table thead  .viewNum {
+    width: 5%;
+    text-align: center;
+}
+.card-body .table-responsive table thead  .time {
+    width: 5%;
+    text-align: center;
+}
+.card-body .table-responsive table thead  .category {
+    width: 8%;
+    text-align: center;
+}
+
+.card-body .table-responsive table tbody .boardName {
+    text-align: center;
+}
+.card-body .table-responsive table tbody .voteNum {
+    text-align: center;
+}
+.card-body .table-responsive table tbody .viewNum {
+    text-align: center;
+}
+.card-body .table-responsive table tbody .time {
+    text-align: center;
+}
+
+.card-body .table-responsive table th,td {
+    border-left: none!important;
+    border-right: none!important;
+}
+
+table tbody .best-title {
+    background-color: #bbffd8!important;
+}
+
+.search-btn {
+    border: 0;
+    outline: 0;
+    background-color: #fff;
+    padding: 0.7rem;
+}
+
+.search-btn img {
+    width: 1rem!important;
+}
+
+.board-spec-func {
+    text-align: right;
+    padding: 0.7rem;
+    padding-right: 1.5rem;
+}
+
+.writer-sec {
+    padding: 0!important;
+}
+
+.boatd-title-dropdown {
+    float: left;
+}
+
+.input-write {
+    padding: 1rem 0;
+}
+
+.input-write textarea {
+    width: 100%;
+}
+
+.tag-group {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    
+
+    display: inline-flex;
+    height: 32px;
+    border-radius: 16px;
+    background: #f0f0f0;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #585858;
+    transition: background-color 50ms ease, box-shadow 100ms ease;
+}
+
+.tag-group:hover {
+    background-color: #dedede;
+}
+
+.tag-group:hover > #input-tag-modify {
+    background-color: #dedede;
+}
+
+.tag-group i {
+    padding: 0.2rem;
+    margin-left: 0.5rem;
+    background: #606060;
+    border-radius: 15px;
+    color: white;
+    height: 1.2rem;
+    line-height: 1;
+}
+
+.tag-group i:hover {
+    background: #252525;
+}
+
+#input-tag-modify {
+    border: none;
+    background: #f0f0f0;
+}
+
+#input-tag-modify:focus {
+    outline: none;
+}
+
+.write-button {
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.write-button button {
+    margin: 0 0.25rem;
+}
+
+.view-title {
+    padding: 1.25rem;
+    padding-bottom: 0;
+    width: 100%;
+}
+
+.view-info {
+    border-top: 2px solid #295231;
+    width: 100%;
+    background: #e5f7e4;
+    margin: 1.25rem;
+    margin-top: 0;
+    padding: 0.5rem 1rem;
+}
+
+.view-info .view-info-nicname {
+    display: inline-block!important;
+    padding: 0!important;
+}
+
+.view-info .view-info-date {
+    font-size: 0.18rem;
+}
+
+.view-info-viewCnt {
+    float: right;
+}
+
+.view-info .view-info-viewCnt i {
+    margin-right: 0.5rem;
+}
+
+.view-content {
+    padding: 0.5rem 3rem 3rem 3rem;
+}
+
+.view-tag span {
+    margin: 0.2rem;
+    background-color: #f6f6f6;
+    border-radius: 15px;
+    padding: 0.3rem;
+    display: inline-block;
+}
+
+.view-up-down {
+    width: 100%;
+    text-align: center;
+    padding-bottom: 1rem;
+    margin-bottom: 3rem;
+    border-bottom: 2px solid #7bdd8f;
+}
+
+.view-up-down button {
+    margin: 0 0.5rem;
+}
+
+.view-up-down button i> span {
+    margin: 0 0.2rem;
+}
+
+.view-up-down button .view-up {
+    color: #bdffbd;
+}
+
+.view-up-down button .view-down {
+    color: #e46c6c;
+}
+
+.view-reply-title {
+    padding: 1.25rem;
+    padding-bottom: 0;
+    width: 100%;
+}
+
+.view-reply-title i {
+    padding: 0 0.5rem;
+}
+
+.view-reply-info {
+    background: #e5f7e4;
+    border: 1.5px solid #95b394;
+    border-radius: 0.3rem;
+    margin: 0 1.25rem 0.25rem 1.25rem;
+}
+
+.view-reply-nicname {
+    display: inline-block!important;
+}
+
+.view-reply-date {
+    float: right;
+    margin: 0.5rem;
+}
+
+.view-reply-list {
+    margin-bottom: 3rem;
+}
+
+.view-reply-list .view-reply-content-text {
+    padding: 0.5rem 2.5rem;
+}
+
+.view-reply-action {
+    display: inline-block;
+    width: 100%;
+    padding: 0.25rem 3rem;
+}
+
+.view-reply-action .view-reply-action-btn, .view-reply-write-action .view-reply-write-action-btn {
+    float: right;
+    margin: 0.5rem;
+    margin-left: 0;
+    padding-right: 0.5rem;
+    border-right: 1px solid black;
+}
+
+.view-reply-action-up-sec, .view-reply-action-down-sec {
+    float: right;
+    margin: 0.5rem;
+    margin-left: 0;
+}
+
+.view-reply-action span:hover, .view-reply-write-action span:hover {
+    cursor: pointer;
+    color: black;
+    transition-property: color;
+    transition-duration: 1s;
+}
+
+.view-reply-action .view-reply-action-btn:first-child, .view-reply-write-action .view-reply-write-action-btn:first-child {
+    border-right: none;
+}
+
+.re-re {
+    margin-left: 1.5rem;
+}
+
+.view-reply-action i {
+    margin: 0 0.25rem;
+}
+
+.updown {
+    margin: 0 0.25rem;
+}
+
+.reply-textarea, .view-reply-wrtie textarea {
+    width: 100%;
+    border: 1px solid rgb(193, 228, 196);
+    border-radius: 5px;
+    resize: none;
+}
+
+.reply-textarea:focus, .view-reply-wrtie textarea:focus {
+     outline: none;
+}
+
+.view-reply-list {
+    width: 100%;
+}
+
+.hide {
+    display: none!important;
+}
+
+.view-reply-wrtie {
+    width: 100%;
+    padding: 0 1.5rem;
+}
+
+.view-reply-wrtie textarea {
+    height: 7rem;
+}
+
+.view-reply-write-action-btn {
+    margin-right: 2rem!important;
+}
+
+.my-tap-body {
+    width: 100%;
+}
+
+.my-tap-body div {
+    list-style: none;
+    display: inline-block;
+    padding: 1rem;
+    cursor: pointer;
+    width: 24%;
+    text-align: center;
+}
+
+.my-tap-body .active {
+    background-color: rgb(213, 255, 213);
+}
+
+.my-tap-body div:hover {
+    background-color: rgb(213, 255, 213);
+}
+
+.my-divider {
+    width: 100%;
+}
+
+.my-divider hr {
+    border-top: 1px solid #2ecc71;
+}
+
+.my-body {
+    width: 100%;
+    padding: 2rem;
+    text-align: center;
+}
+
+.my-body > div {
+    display: inline-block;
+}
+
+.my-content td {
+    padding: 1rem;
+}
+
+.my-content td:first-child {
+    text-align: right;
+    font-weight: 800;
+}
+
+.my-content td:nth-child(2) {
+    min-width: 15rem;
+    text-align: left;
+}
+
+.my-content input {
+    width: 20rem;
+}
+
+.my-footer {
+    display: grid;
+    margin: 0.5rem 0;
+}
+
+.my-footer button {
+    margin: 0.3rem 0.8rem;
+}
+
+.alert-table tbody tr:hover {
+    background-color: rgb(246, 246, 255);
+    cursor: pointer;
+}
+
+.member-table {
+    text-align: center;
+}
+
+.member-table thead .check {
+    width: 1rem;
+}
+
+.member-table thead .status {
+    width: 5rem;
+}
+
+.member-table thead .status-date {
+    width: 2rem;
+}
+
+.member-table thead .sign-up-date {
+    width: 2rem;
+}
+
+.member-table thead .recent-date {
+    width: 2rem;
+}
+
+.member-table thead .func {
+    width: 5rem;
+}
+
+.member-table tbody .func span {
+    margin: 0 0.2rem;
+    cursor: pointer;
+}
+
+.member-table tbody .func span:hover {
+    color: #626262;
+}
+
+.menu-table {
+    width: 70%;
+    margin: auto;
+}
+
+.menu-tab {
+    margin-right: 0.4rem;
+}
+
+.menu-table tbody tr:hover {
+    background-color: rgb(248, 248, 248);
+}
+
+.menu-table tbody tr i:hover {
+    cursor: pointer;
+}
+
+.menu-table tbody tr:last-child {
+    text-align: center;
+}
+
+.menu-table tbody tr:last-child:hover {
+    cursor: pointer;
+}
+
+.menu-table thead th {
+    width: 50%;
+}
+
+.btn-kakao {
+    color: #000;
+    background-color: #F7E600;
+    border-color: #fff;
+}
+
+.btn-kakao img {
+    width: 1rem;
+    margin-right: 0.3rem;
+}
