@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<header th:fragment="topbarFragment">
+
+	<!-- Topbar -->
+	<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+		<!-- Sidebar Toggle (Topbar) -->
+		<button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+			<i class="fa fa-bars"></i>
+		</button>
+	
+		<!-- Topbar Navbar -->
+		<ul class="navbar-nav ml-auto">
+	
+			<!-- Nav Item - Alerts -->
+			<li class="nav-item dropdown no-arrow mx-1">
+				<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-bell fa-fw"></i>
+					<!-- Counter - Alerts -->
+					<span class="badge badge-danger badge-counter">4+</span>
+				</a>
+				<!-- Dropdown - Alerts -->
+				<div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+					<h3 class="dropdown-header dropdown-header-custom">
+						알림
+					</h3>
+					<a class="dropdown-item d-flex align-items-center" href="#">
+						<div>
+							<div class="small text-gray-500">2021.08.28 18:05:28</div>
+							<span class="font-weight-bold">'게시물 제목' 게시글에 '닉네임'님이 댓글을 남기셨습니다.</span>
+						</div>
+					</a>
+					<a class="dropdown-item d-flex align-items-center" href="#">
+						<div>
+							<div class="small text-gray-500">2021.08.28 18:05:28</div>
+							'게시물 제목' 게시글에 '닉네임'님이 댓글을 남기셨습니다.
+						</div>
+					</a>
+					<a class="dropdown-item d-flex align-items-center" href="#">
+						<div>
+							<div class="small text-gray-500">2021.08.28 18:05:28</div>
+							'게시물 제목' 게시글에 '닉네임'님이 댓글을 남기셨습니다.
+						</div>
+					</a>
+					<a class="dropdown-item d-flex align-items-center" href="#">
+						<div>
+							<div class="small text-gray-500">2021.08.28 18:05:28</div>
+							'게시물 제목' 게시글에 '닉네임'님이 댓글을 남기셨습니다.
+						</div>
+					</a>
+					<a class="dropdown-item text-center small text-gray-500" href="#">전체 읽음 처리</a>
+					<a class="dropdown-item text-center small text-gray-500" href="#">전체 알림 목록 보기</a>
+				</div>
+			</li>
+	
+			<div class="topbar-divider d-none d-sm-block"></div>
+
+			<!-- Nav Item - User Information -->
+			<li class="nav-item dropdown no-arrow" sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
+				<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<img class="img-profile rounded-circle" th:src="@{/img/undraw_profile.svg}">
+				</a>
+				<!-- Dropdown - User Information -->
+				<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+					<span class="dropdown-item">
+						<span sec:authentication="principal.username">닉네임</span><div class="small text-gray-500" sec:authentication="principal.username">아이디</div>
+					</span>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="mypage.html">
+					<i class="fas fa-user fa-fw fa-fw mr-2 text-gray-400"></i>
+						회원정보
+				</a>
+				<a class="dropdown-item" href="#">
+					<i class="fas bi bi-pencil-fill fa-fw fa-fw mr-2 text-gray-400"></i>
+					<!--<i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>-->
+						내가쓴글
+				</a>
+				<a class="dropdown-item" href="#">
+					<i class="fas fa-bell fa-fw fa-fw mr-2 text-gray-400"></i>
+						알림목록
+				</a>
+				<a class="dropdown-item" href="#">
+					<i class="fas bi bi-bookmark-fill fa-fw fa-fw mr-2 text-gray-400"></i>
+						스크랩
+				</a>
+				<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+						<i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+							로그아웃
+					</a>
+				</div>
+			</li>
+			<li sec:authorize="!isAuthenticated()">LOGIN</li>
+	
+		</ul>
+	</nav>
+<!-- End of Topbar -->
+
+</header>
+</html>

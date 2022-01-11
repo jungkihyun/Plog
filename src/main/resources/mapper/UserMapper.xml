@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kyoni.plog.mapper.UserMapper">
+	<select id="getUser" resultType="com.kyoni.plog.domain.UserEntity">
+		SELECT username as 'id'
+			, password as 'password'
+			, member_name as 'username'
+		FROM member
+		WHERE username = #{id}
+	</select>
+	
+	<select id="getUserRoles" resultType="com.kyoni.plog.domain.UserRoleEntity">
+		SELECT username as 'id'
+			, authority_code as 'roleName'
+		FROM member_authority
+		WHERE username = #{id}
+	</select>
+</mapper>
