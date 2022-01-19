@@ -25,26 +25,32 @@
 							<div class="text-center">
 								<h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
 							</div>
-							<form class="user">
+							<form class="user" id="form">
 								<div class="form-group">
-									<input type="text" class="form-control form-control-user" id="nicname" placeholder="Nicname">
+									<input type="text" class="form-control form-control-user" id="nicname" name="nicname" placeholder="Nicname">
 								</div>
 								<div class="form-group login-message name-section">
-									<span class="name-massage"></span>
+									<span class="name-message"></span>
 								</div>
 								<div class="form-group">
-									<input type="email" class="form-control form-control-user" id="email" placeholder="Email Address">
+									<input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email Address">
 								</div>
 								<div class="form-group login-message email-section">
-									<span class="email-massage"></span>
+									<span class="email-message"></span>
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control form-control-user" id="password" placeholder="Password">
+									<input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
+								</div>
+								<div class="form-group login-message password-section">
+									<span class="password-message"></span>
 								</div>
 								<div class="form-group">
 									<input type="password" class="form-control form-control-user" id="password-repeat" placeholder="Repeat Password">
 								</div>
-								<a href="#" class="btn btn-success btn-user btn-block">
+								<div class="form-group login-message password-repeat-section">
+									<span class="password-repeat-message"></span>
+								</div>
+								<a id="registerBtn" class="btn btn-success btn-user btn-block">
 									Register Account
 								</a>
 								<hr>
@@ -76,50 +82,144 @@
 	<script>
 		$(function() {
 			$(document).on("keyup", "#nicname", function() {
-				var v = getValLength($(this).val());
-				var lengthText = "닉네임은 2~12자 내외로 설정 가능합니다.";
-				if(v == 0) {
-					$(".name-section").hide();
-					$(".name-massage").text("");
-				} else if(v < 3 || v >= 12) {
-					$(".name-section").show();
-					$(".name-massage").text(lengthText);
+				if(getLengthCheck($(this).val(), 2, 12)) {
+					messageShowAndHide(".name", 0, "");
 				} else {
-					$(".name-section").hide();
-					$(".name-massage").text("");
+					messageShowAndHide(".name", 1, getLengthText("닉네임", 1, 2, 12));
 				}
 			})
 			
 			$(document).on("keyup", "#email", function() {
 				var v = getValLength($(this).val());
 				if(v == 0) {
-					$(".email-section").hide();
-					$(".email-massage").text("");
+					messageShowAndHide(".email", 0, "");
 					return false;
 				}
 				var emailText = "이메일 형식을 지켜주세요.";
-				if(getEmailExp($(this).val()) === true) {
-					$(".email-section").hide();
-					$(".email-massage").text("");
+				if(emailExp($(this).val()) === true) {
+					messageShowAndHide(".email", 0, "");
 				} else {
-					$(".email-section").show();
-					$(".email-massage").text(emailText);
+					messageShowAndHide(".email", 1, emailText);
 				}
 			})
 			
 			$(document).on("keyup", "#password", function() {
+				if(getLengthCheck($(this).val(), 8, 16)) {
+					messageShowAndHide(".password", 0, "");
+				} else {
+					messageShowAndHide(".password", 1, getLengthText("비밀번호", 0, 8, 16));
+					return false;
+				}
 				
+				var passwordText = "최소 8자 이상, 최소 하나의 문자, 하나의 숫자 및 특수 문자를 입력해주세요.";
+				if(passwordExp($(this).val()) === true) {
+					messageShowAndHide(".password", 0, "");
+				} else {
+					if(getValLength($(this).val()) == 0) {
+						return false;
+					}
+					messageShowAndHide(".password", 1, passwordText);
+				}
+			})
+			
+			$(document).on("keyup", "#password-repeat", function() {
+				if(getValLength($(this).val()) == 0) {
+					messageShowAndHide(".password-repeat", 0, "");
+					return false;
+				}
+				var passwordText = "비밀번호가 일치하지 않습니다.";
+				if($(this).val() === $("#password").val()) {
+					messageShowAndHide(".password-repeat", 0, "");
+				} else {
+					messageShowAndHide(".password-repeat", 1, passwordText);
+				}
+			})
+			
+			$(document).on("click", "#registerBtn", function() {
+				if(messageVerfiy() === false) {
+					return false;
+				}
+				
+				var form = document.getElementById("form");
+				form.setAttribute("charset", "UTF-8");
+				form.setAttribute("method", "POST");  //Post 방식
+				form.setAttribute("action", "/user/register"); //요청 보낼 주소
+				form.submit();
 			})
 		})
 		
-		function getValLength(val) {
-			return val.length;
+		function messageVerfiy() {
+			var text = "";
+			var result = true;
+			if(getMessage(".nicname") != "") {
+				text = "닉네임을";
+				result = false;
+			} else if(getMessage(".email") != "") {
+				text = "이메일을";
+				result = false;
+			} else if(getMessage(".password") != "") {
+				text = "비밀번호를";
+				result = false;
+			} else if(getMessage(".password-repeat") != "") {
+				text = "비밀번호 재확인을";
+				result = false;
+			}
+			checkAlert(text);
+			return result;
 		}
 		
-		function getEmailExp(text) {
-			var email = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-			return email.test(text);
+		function getMessage(ele) {
+			return $(ele+"-message").text();
 		}
+		
+		function checkAlert(m) {
+			if(m != "") {
+				alert(m + " 확인해주세요.");
+			}
+		}
+		
+		function messageShowAndHide(ele, type, t) {
+			if(type == 1) {
+				$(ele+"-section").show();
+			} else {
+				$(ele+"-section").hide();
+			}
+			$(ele+"-message").text(t);
+		}
+		
+		function getValLength(v) {
+			return v.length;
+		}
+		
+		function getLengthText(target, type, min, max) {
+			if(type == 0) {
+				return target + "는 " + min + "~" + max + "자 내외로 설정 가능합니다.";
+			} else {
+				return target + "은 " + min + "~" + max + "자 내외로 설정 가능합니다.";
+			}
+		}
+		
+		function getLengthCheck(ele, min, max) {
+			var v = getValLength(ele);
+			if(v == 0) {
+				return true;
+			} else if(v <= min || v >= max) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+		
+		function emailExp(v) {
+			var e = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+			return e.test(v);
+		}
+		
+		function passwordExp(v) {
+			var e = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
+			return e.test(v);
+		}
+		
 	</script>
 </th:block>
 
