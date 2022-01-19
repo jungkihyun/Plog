@@ -45,13 +45,13 @@
 									</form>
 									<hr>
 									<div class="text-center">
-										<a class="small" href="forgot-password.html">Forgot Password?</a>
+										<a class="small" th:href="@{/user/forgotPassword}">Forgot Password?</a>
 									</div>
 									<div class="text-center">
-										<a class="small" href="register.html">Create an Account!</a>
+										<a class="small" th:href="@{/user/register}">Create an Account!</a>
 									</div>
 									<div class="text-center">
-										<a class="small" href="main.html">Go back to the Main page~</a>
+										<a class="small" th:href="@{/}">Go back to the Main page~</a>
 									</div>
 								</div>
 							</div>
@@ -65,10 +65,6 @@
 </th:block>
 <th:block layout:fragment="script">
 	<script>
-		var loginErrorType = '[[${loginErrorType}]]';
-		$(function() {
-			alert(loginErrorType);
-		})
 	</script>
 </th:block>
 
