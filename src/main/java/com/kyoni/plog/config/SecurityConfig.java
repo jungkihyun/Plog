@@ -68,8 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.formLogin()
 				.loginPage("/user/login")
-				.usernameParameter("id")
-				.passwordParameter("password")
+				.usernameParameter("email")
+				.passwordParameter("pwd")
 				.loginProcessingUrl("/user/login")
 				.failureForwardUrl("/user/loginerror?login_error=1")
 				.defaultSuccessUrl("/", true)
@@ -81,7 +81,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public PasswordEncoder encoder() {
+	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
 }

@@ -39,7 +39,7 @@
 									<span class="email-message"></span>
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
+									<input type="password" class="form-control form-control-user" id="password" name="pwd" placeholder="Password">
 								</div>
 								<div class="form-group login-message password-section">
 									<span class="password-message"></span>
@@ -79,8 +79,14 @@
 	</div>
 </th:block>
 <th:block layout:fragment="script">
-	<script>
+	<script type="text/javascript">
+		var publicKeyModules = "[[${publicKeyModules}]]";
+		var publicKeyExponent = "[[${publicKeyExponent}]]";
+	
 		$(function() {
+			/*
+			닉네임 입력 이벤트
+			*/
 			$(document).on("keyup", "#nicname", function() {
 				if(getLengthCheck($(this).val(), 2, 12)) {
 					messageShowAndHide(".name", 0, "");
@@ -89,6 +95,9 @@
 				}
 			})
 			
+			/*
+			이메일 입력 이벤트
+			*/
 			$(document).on("keyup", "#email", function() {
 				var v = getValLength($(this).val());
 				if(v == 0) {
@@ -103,6 +112,9 @@
 				}
 			})
 			
+			/*
+			비밀번호 입력 이벤트
+			*/
 			$(document).on("keyup", "#password", function() {
 				if(getLengthCheck($(this).val(), 8, 16)) {
 					messageShowAndHide(".password", 0, "");
@@ -122,6 +134,9 @@
 				}
 			})
 			
+			/*
+			비밀번호 확인 입력 이벤트
+			*/
 			$(document).on("keyup", "#password-repeat", function() {
 				if(getValLength($(this).val()) == 0) {
 					messageShowAndHide(".password-repeat", 0, "");
@@ -135,90 +150,30 @@
 				}
 			})
 			
+			/*
+			가입버튼 클릭 이벤트
+			*/
 			$(document).on("click", "#registerBtn", function() {
 				if(messageVerfiy() === false) {
 					return false;
 				}
 				
+				if(validateEncryptedForm() == false) {
+					return false;
+				}
 				var form = document.getElementById("form");
 				form.setAttribute("charset", "UTF-8");
 				form.setAttribute("method", "POST");  //Post 방식
 				form.setAttribute("action", "/user/register"); //요청 보낼 주소
+				form.password.value = securedPassword;
 				form.submit();
 			})
 		})
 		
-		function messageVerfiy() {
-			var text = "";
-			var result = true;
-			if(getMessage(".nicname") != "") {
-				text = "닉네임을";
-				result = false;
-			} else if(getMessage(".email") != "") {
-				text = "이메일을";
-				result = false;
-			} else if(getMessage(".password") != "") {
-				text = "비밀번호를";
-				result = false;
-			} else if(getMessage(".password-repeat") != "") {
-				text = "비밀번호 재확인을";
-				result = false;
-			}
-			checkAlert(text);
-			return result;
-		}
 		
-		function getMessage(ele) {
-			return $(ele+"-message").text();
-		}
 		
-		function checkAlert(m) {
-			if(m != "") {
-				alert(m + " 확인해주세요.");
-			}
-		}
 		
-		function messageShowAndHide(ele, type, t) {
-			if(type == 1) {
-				$(ele+"-section").show();
-			} else {
-				$(ele+"-section").hide();
-			}
-			$(ele+"-message").text(t);
-		}
 		
-		function getValLength(v) {
-			return v.length;
-		}
-		
-		function getLengthText(target, type, min, max) {
-			if(type == 0) {
-				return target + "는 " + min + "~" + max + "자 내외로 설정 가능합니다.";
-			} else {
-				return target + "은 " + min + "~" + max + "자 내외로 설정 가능합니다.";
-			}
-		}
-		
-		function getLengthCheck(ele, min, max) {
-			var v = getValLength(ele);
-			if(v == 0) {
-				return true;
-			} else if(v <= min || v >= max) {
-				return false;
-			} else {
-				return true;
-			}
-		}
-		
-		function emailExp(v) {
-			var e = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-			return e.test(v);
-		}
-		
-		function passwordExp(v) {
-			var e = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{8,16}$/;
-			return e.test(v);
-		}
 		
 	</script>
 </th:block>

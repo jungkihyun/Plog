@@ -19,12 +19,12 @@
 									<div class="text-center">
 										<h1 class="h4 text-gray-900 mb-4">LOGIN</h1>
 									</div>
-									<form class="user" action="/user/login" method="post">
+									<form class="user" th:action="@{/user/login}" id="form" method="post">
 										<div class="form-group">
-											<input type="text" name="id" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+											<input type="text" name="email" class="form-control form-control-user" id="emailInput" aria-describedby="emailHelp" placeholder="Enter Email Address...">
 										</div>
 										<div class="form-group">
-											<input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+											<input type="password" name="pwd" class="form-control form-control-user" id="pwdInput" placeholder="Password">
 										</div>
 										<div class="form-group">
 											<div class="custom-control custom-checkbox small">
@@ -32,7 +32,7 @@
 												<label class="custom-control-label" for="customCheck">Remember Me</label>
 											</div>
 										</div>
-										<button type="submit" class="btn btn-success btn-user btn-block">
+										<button type="submit" id="loginBtn" class="btn btn-success btn-user btn-block">
 											Login
 										</button>
 										<hr>
@@ -64,7 +64,20 @@
 
 </th:block>
 <th:block layout:fragment="script">
-	<script>
+	<script type="text/javascript">
+		var loginErrorType = "[[${loginErrorType}]]";
+		$(function() {
+			if(loginErrorType == '1') {
+				alert("로그인에 실패 했습니다.\n다시 시도해주세요.");
+			}
+			/* $(document).on("click", "#loginBtn", function() {
+				var form = document.getElementById("form");
+				form.setAttribute("charset", "UTF-8");
+				form.setAttribute("method", "POST");  //Post 방식
+				form.setAttribute("action", "/user/login"); //요청 보낼 주소
+				form.submit();
+			}) */
+		})
 	</script>
 </th:block>
 

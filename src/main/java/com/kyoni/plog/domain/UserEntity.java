@@ -6,17 +6,14 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserEntity {
-	private String id;
-	private String password;
-	private String username;
+	private int seq;
+	private String email;
+	private String nicname;
+	private String pwd;
 
-	public UserEntity(String id, String password) {
-		this.id = id;
-		this.password = password;
+	public UserEntity(String email, String pwd) {
+		this.email = email;
+		this.pwd = pwd;
 	}
 
-	@Override
-	public String toString() {
-		return "UserEntity [id=" + id + ", password=" + password + "]";
-	}
 }

@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class UserVO {
 	
-	private String nicname;
 	private String email;
-	private String password;
+	private String nicname;
+	private String pwd;
 
 }

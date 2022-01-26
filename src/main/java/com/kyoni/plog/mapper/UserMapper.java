@@ -7,10 +7,13 @@ import org.apache.ibatis.annotations.Param;
 
 import com.kyoni.plog.domain.UserEntity;
 import com.kyoni.plog.domain.UserRoleEntity;
+import com.kyoni.plog.vo.UserVO;
 
 @Mapper
 public interface UserMapper {
-	UserEntity getUser(@Param("id") String id);
+	UserEntity getUser(@Param("email") String email);
 
-	List<UserRoleEntity> getUserRoles(@Param("id") String id);
+	List<UserRoleEntity> getUserRoles(@Param("memberId") int memberId);
+	
+	void addUser(UserVO vo);
 }

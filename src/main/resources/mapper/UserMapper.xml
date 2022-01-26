@@ -4,17 +4,24 @@
 
 <mapper namespace="com.kyoni.plog.mapper.UserMapper">
 	<select id="getUser" resultType="com.kyoni.plog.domain.UserEntity">
-		SELECT username as 'id'
-			, password as 'password'
-			, member_name as 'username'
+		SELECT seq as 'seq'
+			, email as 'email'
+			, nicname as 'nicname'
+			, pwd as 'pwd'
 		FROM member
-		WHERE username = #{id}
+		WHERE email = #{email}
 	</select>
 	
 	<select id="getUserRoles" resultType="com.kyoni.plog.domain.UserRoleEntity">
-		SELECT username as 'id'
+		SELECT seq as 'seq'
+			, member_id as 'member_id'
 			, authority_code as 'roleName'
 		FROM member_authority
-		WHERE username = #{id}
+		WHERE member_id = #{memberId}
 	</select>
+	
+	<insert id="addUser" parameterType="com.kyoni.plog.vo.UserVO">
+		INSERT INTO member (email, nicname, pwd)
+		VALUES(#{email}, #{nicname}, #{pwd})
+	</insert>
 </mapper>

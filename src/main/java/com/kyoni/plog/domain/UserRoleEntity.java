@@ -6,11 +6,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserRoleEntity {
-	private String id;
+	private int seq;
+	private String email;
 	private String roleName;
 
-	public UserRoleEntity(String id, String roleName) {
-		this.id = id;
+	public UserRoleEntity(String email, String roleName) {
+		this.email = email;
 		this.roleName = roleName;
 	}
 
