@@ -21,6 +21,7 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional(readOnly = false)
 	public void addUser(UserVO vo) {
 		userMapper.addUser(vo);
+		userMapper.addAuthority(userMapper.getLastIndex());
 	}
 
 	@Override

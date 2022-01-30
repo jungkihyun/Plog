@@ -16,4 +16,6 @@ public interface UserMapper {
 	List<UserRoleEntity> getUserRoles(@Param("memberId") int memberId);
 	
 	void addUser(UserVO vo);
+	void addAuthority(int seq);
+	int getLastIndex();
 }

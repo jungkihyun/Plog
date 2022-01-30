@@ -24,4 +24,13 @@
 		INSERT INTO member (email, nicname, pwd)
 		VALUES(#{email}, #{nicname}, #{pwd})
 	</insert>
+	
+	<select id="getLastIndex" resultType="int">
+		SELECT LAST_INSERT_ID() as 'seq';
+	</select>
+	
+	<insert id="addAuthority">
+		INSERT INTO member_authority (member_id, authority_code)
+		VALUES(#{seq}, 'ROLE_USER')
+	</insert>
 </mapper>
