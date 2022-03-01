@@ -68,7 +68,7 @@ public class UserService {
 	}
 	
 	/***
-	 * userVO의 nicname, email, password 정규식 검증
+	 * userVO의 username, email, password 정규식 검증
 	 * @param userVO
 	 * @return
 	 * @throws BadPaddingException 
@@ -80,8 +80,8 @@ public class UserService {
 	 * @throws ServletException 
 	 */
 	public LoginVerify registerInputVerify(UserVO userVO, HttpSession session) throws ServletException, IOException {
-		if(!getLengthCheck(userVO.getNicname(), 2, 12)) {
-			return LoginVerify.NICNAME;
+		if(!getLengthCheck(userVO.getUsername(), 2, 12)) {
+			return LoginVerify.USERNAME;
 		}
 		if(!patternCheck(userVO.getEmail(), "EMAIL")) {
 			return LoginVerify.EMAIL; 

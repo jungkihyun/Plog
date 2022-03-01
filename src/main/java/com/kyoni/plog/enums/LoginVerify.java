@@ -3,7 +3,7 @@ package com.kyoni.plog.enums;
 public enum LoginVerify {
 	
 	OK("OK"),
-	NICNAME("NICNAME"),
+	USERNAME("USERNAME"),
 	EMAIL("EMAIL"),
 	PW("PW");
 	

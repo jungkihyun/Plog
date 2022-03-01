@@ -9,17 +9,19 @@ public class UserVO {
 	
 	private int seq;
 	private String email;
-	private String nicname;
+	private String username;
 	private String pwd;
+	private String googleSub;
 	
 	public UserVO() {
 		
 	}
 	
-	public UserVO(String email, String nicname, String pwd) {
+	public UserVO(String email, String username, String pwd, String googleSub) {
 		this.email = email;
-		this.nicname = nicname;
+		this.username = username;
 		this.pwd = pwd;
+		this.googleSub = googleSub;
 	}
 
 }

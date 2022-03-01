@@ -10,7 +10,7 @@ true / false 반환
 function messageVerfiy() {
 	var text = "";
 	var result = true;
-	if(getMessage(".nicname") != "") {
+	if(getMessage(".username") != "") {
 		text = "닉네임을";
 		result = false;
 	} else if(getMessage(".email") != "") {

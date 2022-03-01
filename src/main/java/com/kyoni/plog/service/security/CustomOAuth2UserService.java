@@ -62,8 +62,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		UserEntity user = memberService.getUser(email);
 		if(user == null){
 			user = attributes.toEntity();
-			UserVO vo = new UserVO(user.getEmail(), user.getNicname(), user.getPwd() != null ? user.getPwd() : "");
+			UserVO vo = new UserVO(user.getEmail(), user.getUsername(), user.getPwd() != null ? user.getPwd() : "", user.getGoogleSub());
 			memberService.addUser(vo);
+			user.setRole(Role.USER);
 		} else {
 			if("ROLE_USER".equals(user.getAuthorityCode())) {
 				user.setRole(Role.USER);

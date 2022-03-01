@@ -1,5 +1,7 @@
 package com.kyoni.plog.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import com.kyoni.plog.service.security.CustomOAuth2UserService;
 import com.kyoni.plog.service.security.CustomUserDetailsService;
@@ -19,11 +23,14 @@ import com.kyoni.plog.service.security.CustomUserDetailsService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// CustomUserDetailsService 객체 주입
 	@Autowired
-	CustomUserDetailsService customUserDetailsService;
+	private CustomUserDetailsService customUserDetailsService;
 	
 	@Autowired
 	private CustomOAuth2UserService customOAuth2UserService;
 
+	@Autowired
+	private DataSource dataSource;
+	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers("/css/**", "/img/**", "/js/**", "/scss/**", "/vendor/**");
@@ -83,9 +90,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/")
 			.and()
+				.rememberMe()
+				.key("random key")
+				.rememberMeParameter("remember-me")
+				.alwaysRemember(true)
+				.userDetailsService(customUserDetailsService)
+				.tokenRepository(tokenRepository())
+			.and()
 				.oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
 	}
-
+	
+	public PersistentTokenRepository tokenRepository() {
+		JdbcTokenRepositoryImpl repo = new JdbcTokenRepositoryImpl();
+		repo.setDataSource(dataSource);
+		return repo;
+	}
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

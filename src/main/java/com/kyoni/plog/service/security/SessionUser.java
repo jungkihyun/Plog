@@ -13,10 +13,10 @@ import com.kyoni.plog.domain.UserEntity;
  */
 @Getter
 public class SessionUser implements Serializable {
-	private String nicname, email, picture;
+	private String username, email, picture;
 
 	public SessionUser(UserEntity user) {
-		this.nicname = user.getNicname();
+		this.username = user.getUsername();
 		this.email = user.getEmail();
 	}
 }

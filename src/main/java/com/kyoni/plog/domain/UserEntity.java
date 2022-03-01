@@ -13,10 +13,11 @@ import lombok.Setter;
 public class UserEntity {
 	private int seq;
 	private String email;
-	private String nicname;
+	private String username;
 	private String pwd;
 	private String authorityCode;
 	private Role role;
+	private String googleSub;
 
 	public UserEntity(String email, String pwd) {
 		this.email = email;
@@ -24,10 +25,11 @@ public class UserEntity {
 	}
 	
 	@Builder
-	public UserEntity(String nicname, String email, Role role) {
-		this.nicname = nicname;
+	public UserEntity(String username, String email, Role role, String googleSub) {
+		this.username = username;
 		this.email = email;
 		this.role = role;
+		this.googleSub = googleSub;
 	}
 
 }

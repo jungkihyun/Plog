@@ -228,7 +228,7 @@ table tbody .best-title {
     padding: 0.5rem 1rem;
 }
 
-.view-info .view-info-nicname {
+.view-info .view-info-username {
     display: inline-block!important;
     padding: 0!important;
 }
@@ -298,7 +298,7 @@ table tbody .best-title {
     margin: 0 1.25rem 0.25rem 1.25rem;
 }
 
-.view-reply-nicname {
+.view-reply-username {
     display: inline-block!important;
 }
 

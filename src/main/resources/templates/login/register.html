@@ -27,7 +27,7 @@
 							</div>
 							<form class="user" id="form">
 								<div class="form-group">
-									<input type="text" class="form-control form-control-user" id="nicname" name="nicname" placeholder="Nicname">
+									<input type="text" class="form-control form-control-user" id="username" name="username" placeholder="Nicname">
 								</div>
 								<div class="form-group login-message name-section">
 									<span class="name-message"></span>
@@ -87,7 +87,7 @@
 			/*
 			닉네임 입력 이벤트
 			*/
-			$(document).on("keyup", "#nicname", function() {
+			$(document).on("keyup", "#username", function() {
 				if(getLengthCheck($(this).val(), 2, 12)) {
 					messageShowAndHide(".name", 0, "");
 				} else {

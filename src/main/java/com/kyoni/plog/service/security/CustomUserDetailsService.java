@@ -38,8 +38,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 		// 정보가 있을 경우엔 UserDetails인터페이스를 구현한 객체를 리턴
 		CustomUserDetails customUserDetails = new CustomUserDetails();
 		customUserDetails.setEmail(customUser.getEmail());
-		customUserDetails.setNicname(customUser.getNicname());
 		customUserDetails.setPassword(customUser.getPwd());
+		customUserDetails.setUsername(customUser.getEmail());
 
 		List<UserRoleEntity> customRoles = memberService.getUserRoles(customUser.getSeq());
 		// 로그인 한 사용자의 권한 정보를 GrantedAuthority를 구현하고 있는 SimpleGrantedAuthority객체에 담아

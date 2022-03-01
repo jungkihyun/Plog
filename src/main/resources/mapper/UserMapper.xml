@@ -6,12 +6,13 @@
 	<select id="getUser" resultType="com.kyoni.plog.domain.UserEntity">
 		SELECT m.seq as 'seq'
 			, m.email as 'email'
-			, m.nicname as 'nicname'
+			, m.username as 'username'
 			, m.pwd as 'pwd'
 			, a.authority_code as 'authorityCode'
+			, m.google_sub as 'googleSub'
 		FROM member m
 		LEFT JOIN member_authority a ON a.member_id = m.seq
-		WHERE m.email = #{email}
+		WHERE m.email = #{email} or m.google_sub = #{email}
 	</select>
 	
 	<select id="getUserRoles" resultType="com.kyoni.plog.domain.UserRoleEntity">
@@ -23,8 +24,8 @@
 	</select>
 	
 	<insert id="addUser" parameterType="com.kyoni.plog.vo.UserVO">
-		INSERT INTO member (email, nicname, pwd)
-		VALUES(#{email}, #{nicname}, #{pwd})
+		INSERT INTO member (email, username, pwd, google_sub)
+		VALUES(#{email}, #{username}, #{pwd}, #{googleSub})
 	</insert>
 	
 	<select id="getLastIndex" resultType="int">
