@@ -9,7 +9,8 @@
 			, m.username as 'username'
 			, m.pwd as 'pwd'
 			, a.authority_code as 'authorityCode'
-			, m.google_sub as 'googleSub'
+			, CASE WHEN m.google_sub IS NOT NULL THEN m.google_sub ELSE '' END as 'googleSub'
+			, CASE WHEN m.picture IS NOT NULL THEN m.picture ELSE '' END as 'picture'
 		FROM member m
 		LEFT JOIN member_authority a ON a.member_id = m.seq
 		WHERE m.email = #{email} or m.google_sub = #{email}
@@ -24,8 +25,8 @@
 	</select>
 	
 	<insert id="addUser" parameterType="com.kyoni.plog.vo.UserVO">
-		INSERT INTO member (email, username, pwd, google_sub)
-		VALUES(#{email}, #{username}, #{pwd}, #{googleSub})
+		INSERT INTO member (email, username, pwd, google_sub, picture)
+		VALUES(#{email}, #{username}, #{pwd}, #{googleSub}, #{picture})
 	</insert>
 	
 	<select id="getLastIndex" resultType="int">

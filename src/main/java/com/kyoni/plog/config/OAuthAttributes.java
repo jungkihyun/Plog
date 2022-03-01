@@ -12,15 +12,16 @@ import lombok.Getter;
 public class OAuthAttributes {
 
 	private Map<String,Object> attributes;
-	private String nameAttributeKey, username, email, googleSub;
+	private String nameAttributeKey, username, email, googleSub, picture;
 	
 	@Builder
-	public OAuthAttributes(Map<String,Object> attributes, String nameAttributeKey, String username, String email, String googleSub) {
+	public OAuthAttributes(Map<String,Object> attributes, String nameAttributeKey, String username, String email, String googleSub, String picture) {
 		this.attributes = attributes;
 		this.nameAttributeKey = nameAttributeKey;
 		this.username = username;
 		this.email = email;
 		this.googleSub = googleSub;
+		this.picture = picture;
 	}
 	public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
 		return ofGoogle(userNameAttributeName, attributes);
@@ -32,6 +33,7 @@ public class OAuthAttributes {
 				.attributes(attributes)
 				.nameAttributeKey(userNameAttributeName)
 				.googleSub((String) attributes.get("sub"))
+				.picture((String) attributes.get("picture"))
 				.build();
 	}
 	public UserEntity toEntity() {
@@ -40,6 +42,7 @@ public class OAuthAttributes {
 				.email(email)
 				.role(Role.ANONYMOUS)
 				.googleSub(googleSub)
+				.picture(picture)
 				.build();
 	}
 

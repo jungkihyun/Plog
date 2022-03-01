@@ -46,8 +46,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 				.getUserInfoEndpoint()
 				.getUserNameAttributeName();
 		// OAuthAttributes: attribute를 담을 클래스 (개발자가 생성)
-		OAuthAttributes attributes = OAuthAttributes
-				.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+		OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 		UserEntity user = saveOrUpdate(attributes);
 		// SessioUser: 세션에 사용자 정보를 저장하기 위한 DTO 클래스 (개발자가 생성)
 		httpSession.setAttribute("user", new SessionUser(user));
@@ -62,7 +61,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		UserEntity user = memberService.getUser(email);
 		if(user == null){
 			user = attributes.toEntity();
-			UserVO vo = new UserVO(user.getEmail(), user.getUsername(), user.getPwd() != null ? user.getPwd() : "", user.getGoogleSub());
+			UserVO vo = new UserVO(user.getEmail(), user.getUsername(), user.getPwd() != null ? user.getPwd() : "", user.getGoogleSub(), user.getPicture());
 			memberService.addUser(vo);
 			user.setRole(Role.USER);
 		} else {

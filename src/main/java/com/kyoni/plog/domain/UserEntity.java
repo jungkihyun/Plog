@@ -18,6 +18,7 @@ public class UserEntity {
 	private String authorityCode;
 	private Role role;
 	private String googleSub;
+	private String picture;
 
 	public UserEntity(String email, String pwd) {
 		this.email = email;
@@ -25,11 +26,12 @@ public class UserEntity {
 	}
 	
 	@Builder
-	public UserEntity(String username, String email, Role role, String googleSub) {
+	public UserEntity(String username, String email, Role role, String googleSub, String picture) {
 		this.username = username;
 		this.email = email;
 		this.role = role;
 		this.googleSub = googleSub;
+		this.picture = picture;
 	}
 
 }
