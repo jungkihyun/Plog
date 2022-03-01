@@ -4,12 +4,14 @@
 
 <mapper namespace="com.kyoni.plog.mapper.UserMapper">
 	<select id="getUser" resultType="com.kyoni.plog.domain.UserEntity">
-		SELECT seq as 'seq'
-			, email as 'email'
-			, nicname as 'nicname'
-			, pwd as 'pwd'
-		FROM member
-		WHERE email = #{email}
+		SELECT m.seq as 'seq'
+			, m.email as 'email'
+			, m.nicname as 'nicname'
+			, m.pwd as 'pwd'
+			, a.authority_code as 'authorityCode'
+		FROM member m
+		LEFT JOIN member_authority a ON a.member_id = m.seq
+		WHERE m.email = #{email}
 	</select>
 	
 	<select id="getUserRoles" resultType="com.kyoni.plog.domain.UserRoleEntity">

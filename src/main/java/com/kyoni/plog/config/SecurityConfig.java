@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.kyoni.plog.service.security.CustomOAuth2UserService;
 import com.kyoni.plog.service.security.CustomUserDetailsService;
 
 @Configuration
@@ -19,6 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	// CustomUserDetailsService 객체 주입
 	@Autowired
 	CustomUserDetailsService customUserDetailsService;
+	
+	@Autowired
+	private CustomOAuth2UserService customOAuth2UserService;
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -77,7 +81,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.logout()
 				.logoutUrl("/logout")
-				.logoutSuccessUrl("/");
+				.logoutSuccessUrl("/")
+			.and()
+				.oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
 	}
 
 	@Bean

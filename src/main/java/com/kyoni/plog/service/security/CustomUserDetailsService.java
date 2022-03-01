@@ -3,6 +3,8 @@ package com.kyoni.plog.service.security;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,8 +20,11 @@ import com.kyoni.plog.domain.UserRoleEntity;
 public class CustomUserDetailsService implements UserDetailsService {
 	// UserDbService는 인터페이스다. 해당 인터페이스를 구현하고 있는 객체가 Bean으로 등록되어 있어야 한다.
 	@Autowired
-	MemberServiceImpl memberService;
+	private MemberServiceImpl memberService;
 
+	@Autowired
+	private HttpSession httpSession;
+	
 	// 사용자가 로그인할 때 아이디를 입력하면 loadUserByUsername에 인자로 전달한다.
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
@@ -46,6 +51,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 			}
 		}
 
+		// SessioUser: 세션에 사용자 정보를 저장하기 위한 DTO 클래스 (개발자가 생성)
+		httpSession.setAttribute("user", new SessionUser(customUser));
+		
 		// CustomUserDetails객체에 권한 목록 (authorities)를 설정한다.
 		customUserDetails.setAuthorities(authorities);
 		customUserDetails.setEnabled(true);
