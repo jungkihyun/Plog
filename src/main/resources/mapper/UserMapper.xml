@@ -5,7 +5,7 @@
 <mapper namespace="com.kyoni.plog.mapper.UserMapper">
 	<select id="getUser" resultType="com.kyoni.plog.domain.UserEntity">
 		SELECT m.seq as 'seq'
-			, m.email as 'email'
+			, CASE WHEN m.email IS NOT NULL THEN m.email ELSE '' END as 'email'
 			, m.username as 'username'
 			, m.pwd as 'pwd'
 			, a.authority_code as 'authorityCode'
@@ -13,7 +13,7 @@
 			, CASE WHEN m.picture IS NOT NULL THEN m.picture ELSE '' END as 'picture'
 		FROM member m
 		LEFT JOIN member_authority a ON a.member_id = m.seq
-		WHERE m.email = #{email} or m.oauth_key = #{email}
+		WHERE m.email = #{email} or m.oauth_key = #{oauthKey}
 	</select>
 	
 	<select id="getUserRoles" resultType="com.kyoni.plog.domain.UserRoleEntity">
@@ -37,4 +37,10 @@
 		INSERT INTO member_authority (member_id, authority_code)
 		VALUES(#{seq}, 'ROLE_USER')
 	</insert>
+	
+	<update id="updateUserEmail">
+		UPDATE member
+		SET email = #{email}
+		WHERE oauth_key = #{oauthKey}
+	</update>
 </mapper>

@@ -1,6 +1,7 @@
 package com.kyoni.plog.service.security;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public UserEntity getUser(String email) {
-		return userMapper.getUser(email);
+	public UserEntity getUser(Map<String, String> map) {
+		return userMapper.getUser(map);
 	}
 
 	@Override
@@ -37,6 +38,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public UserVO getUserByEmail(String loginId) {
 		return null;
+	}
+	
+	@Override
+	public void updateUserEmail(UserEntity user) {
+		userMapper.updateUserEmail(user);
 	}
 
 }

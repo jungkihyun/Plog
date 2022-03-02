@@ -1,7 +1,9 @@
 package com.kyoni.plog.service.security;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,7 +31,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		// loginId에 해당하는 정보를 데이터베이스에서 읽어 CustomUser객체에 저장한다.
-		UserEntity customUser = memberService.getUser(userId);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("email", userId);
+		map.put("oauthKey", userId);
+		UserEntity customUser = memberService.getUser(map);
 
 		// 해당 아이디에 해당하는 정보가 없으면 UsernameNotFoundException이 발생
 		if (customUser == null)

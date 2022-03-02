@@ -1,6 +1,8 @@
 package com.kyoni.plog.service.security;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -37,17 +39,16 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 		OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
 		OAuth2User oAuth2User = delegate.loadUser(userRequest);
 		// 현재 로그인 진행 중인 서비스를 구분하는 코드
-		String registrationId = userRequest
-				.getClientRegistration()
-				.getRegistrationId();
+		String registrationId = userRequest.getClientRegistration().getRegistrationId();
+		
 		// oauth2 로그인 진행 시 키가 되는 필드값
-		String userNameAttributeName = userRequest.getClientRegistration()
-				.getProviderDetails()
-				.getUserInfoEndpoint()
-				.getUserNameAttributeName();
+		String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
+		
 		// OAuthAttributes: attribute를 담을 클래스 (개발자가 생성)
 		OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-		UserEntity user = saveOrUpdate(attributes);
+		
+		UserEntity user = saveOrUpdate(attributes, registrationId);
+		
 		// SessioUser: 세션에 사용자 정보를 저장하기 위한 DTO 클래스 (개발자가 생성)
 		httpSession.setAttribute("user", new SessionUser(user));
 		return new DefaultOAuth2User(
@@ -56,9 +57,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 				attributes.getNameAttributeKey()
 		);
 	}
-	private UserEntity saveOrUpdate(OAuthAttributes attributes) {
+	private UserEntity saveOrUpdate(OAuthAttributes attributes, String registrationId) {
 		String email = attributes.getEmail();
-		UserEntity user = memberService.getUser(email);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("email", email);
+		map.put("oauthKey", attributes.getOauthKey());
+		UserEntity user = memberService.getUser(map);
 		if(user == null){
 			user = attributes.toEntity();
 			UserVO vo = new UserVO(user.getEmail(), user.getUsername(), user.getPwd() != null ? user.getPwd() : "", user.getOauthKey(), user.getPicture());
@@ -71,6 +75,12 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 				user.setRole(Role.ADMIN);
 			} else {
 				user.setRole(Role.ANONYMOUS);
+			}
+			if("kakao".equals(registrationId)) {
+				if(!"".equals(email) && "".equals(user.getEmail())) {
+					user.setEmail(email);
+					memberService.updateUserEmail(user);
+				}
 			}
 		}
 

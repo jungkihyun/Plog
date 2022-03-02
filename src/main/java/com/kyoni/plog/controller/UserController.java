@@ -104,4 +104,10 @@ public class UserController {
 	public String forgotPassword() {
 		return "login/forgotPassword";
 	}
+	
+	@PostMapping("/forgotPassword")
+	public String forgotPassword(Model model) {
+		
+		return "login/login";
+	}
 }
