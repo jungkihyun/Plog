@@ -105,9 +105,14 @@ public class UserController {
 		return "login/forgotPassword";
 	}
 	
+	/***
+	 * 비밀번호 찾기 로직
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/forgotPassword")
 	public String forgotPassword(Model model) {
-		
 		return "login/login";
 	}
+	
 }
