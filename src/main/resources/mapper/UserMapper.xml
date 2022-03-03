@@ -11,6 +11,10 @@
 			, a.authority_code as 'authorityCode'
 			, CASE WHEN m.oauth_key IS NOT NULL THEN m.oauth_key ELSE '' END as 'oauthKey'
 			, CASE WHEN m.picture IS NOT NULL THEN m.picture ELSE '' END as 'picture'
+			, m.first_date as 'firstDate'
+			, m.first_date_user as 'firstDateUser'
+			, m.last_date as 'lastDate'
+			, m.last_date_user as 'lastDateUser'
 		FROM member m
 		LEFT JOIN member_authority a ON a.member_id = m.seq
 		WHERE m.email = #{email} or m.oauth_key = #{oauthKey}
@@ -25,8 +29,8 @@
 	</select>
 	
 	<insert id="addUser" parameterType="com.kyoni.plog.vo.UserVO">
-		INSERT INTO member (email, username, pwd, oauth_key, picture)
-		VALUES(#{email}, #{username}, #{pwd}, #{oauthKey}, #{picture})
+		INSERT INTO member (email, username, pwd, oauth_key, picture, first_date, first_date_user, last_date, last_date_user)
+		VALUES(#{email}, #{username}, #{pwd}, #{oauthKey}, #{picture}, now(), #{email}, now(), #{email})
 	</insert>
 	
 	<select id="getLastIndex" resultType="int">

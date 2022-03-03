@@ -1,5 +1,7 @@
 package com.kyoni.plog.domain;
 
+import java.util.Date;
+
 import com.kyoni.plog.enums.Role;
 
 import lombok.Builder;
@@ -19,6 +21,10 @@ public class UserEntity {
 	private Role role;
 	private String oauthKey;
 	private String picture;
+	private Date firstDate;
+	private String firstDateUser;
+	private Date lastDate;
+	private String lastDateUser;
 
 	public UserEntity(String email, String pwd) {
 		this.email = email;

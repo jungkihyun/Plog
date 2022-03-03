@@ -27,7 +27,13 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public UserEntity getUser(Map<String, String> map) {
-		return userMapper.getUser(map);
+		UserEntity entity = null;
+		try {
+			entity = userMapper.getUser(map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return entity;
 	}
 
 	@Override

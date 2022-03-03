@@ -33,23 +33,19 @@
 										<table>
 											<tr>
 												<td>아이디</td>
-												<td>abcde</td>
+												<td th:text="${user.email}">ID</td>
 											</tr>
 											<tr>
 												<td>닉네임</td>
-												<td>abcsefasefesfde</td>
-											</tr>
-											<tr>
-												<td>이메일</td>
-												<td>abcde</td>
+												<td th:text="${user.username}">UserName</td>
 											</tr>
 											<tr>
 												<td>가입일</td>
-												<td>abcde</td>
+												<td th:text="${#dates.format(user.firstDate, 'yyyy-dd-MM HH:mm')}">First Date</td>
 											</tr>
 											<tr>
 												<td>최근로그인</td>
-												<td>abcsefsfesfsfde</td>
+												<td th:text="${#dates.format(user.lastDate, 'yyyy-dd-MM HH:mm')}">Last Date</td>
 											</tr>
 										</table>
 										<div class="my-footer">
@@ -109,7 +105,7 @@
 			} else if(t == '비밀번호변경') {
 				// modal
 			} else if(t == '로그아웃') {
-				location.href = "main.html";
+				location.href = "/logout";
 			}
 		})
 
