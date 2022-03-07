@@ -30,6 +30,7 @@
 								</div>
 								<div class="my-body">
 									<div class="my-content">
+										<div class="my-picture"><input type="file" name="profile"><img class="user-img" th:src="${user.picture}"><div class="my-picture-add"><img class="plus-img" th:src="@{/img/icons/plus-circle.svg}"></div></div>
 										<table>
 											<tr>
 												<td>아이디</td>
@@ -113,6 +114,11 @@
 			alert($("#cur-pw").val());
 			location.href = "mypwchange.html";
 		})
+		
+		$(document).on("click", ".my-picture-add", function() {
+			$(".my-picture input").click();
+		})
+		
 	</script>
 </th:block>
 
