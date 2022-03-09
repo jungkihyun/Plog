@@ -33,7 +33,7 @@
 										<form id="form" method="post" enctype="multipart/form-data">
 											<div class="my-picture">
 												<input type="file" name="profile" accept="image/*,.gif">
-												<img class="user-img" th:src="${user.picture}">
+												<img class="user-img" th:src="@{${user.picture}}">
 												<div class="my-picture-add">
 													<img class="plus-img" th:src="@{/img/icons/plus-circle.svg}">
 												</div>

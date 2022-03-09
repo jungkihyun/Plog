@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -13,7 +14,7 @@ import com.kyoni.plog.vo.UserVO;
 
 public class FileUtil {
 
-	public static boolean saveFile(UserVO vo, String directoryPath) throws IOException {
+	public static void saveFile(UserVO vo, String directoryPath) throws IOException {
 		MultipartFile file = vo.getProfile();
 		
 		// parent directory를 찾는다.
@@ -22,14 +23,7 @@ public class FileUtil {
 		// directory 해당 경로까지 디렉토리를 모두 만든다.
 		Files.createDirectories(directory);
 
-		// 파일명을 바르게 수정한다.
-		String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-		try {
-			// 파일명에 '..' 문자가 들어 있다면 오류를 발생하고 아니라면 진행(해킹및 오류방지)
-			Assert.state(!fileName.contains(".."), "Name of file cannot contain '..'");
-		} catch (Exception e) {
-			return false;
-		}
+		String fileName = vo.getSeq() + "_" + new Date().getTime();
 		// 파일을 저장할 경로를 Path 객체로 받는다.
 		Path targetPath = directory.resolve(fileName).normalize();
 		vo.setPicture(targetPath.toString());
@@ -40,7 +34,6 @@ public class FileUtil {
 		} catch (Exception e) {
 		}
 		
-		return true;
 	}
 
 }

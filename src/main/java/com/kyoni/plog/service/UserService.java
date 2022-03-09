@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,10 @@ public class UserService {
 	
 	@Autowired
 	private MemberServiceImpl memberService;
+	
+	@Value("${spring.servlet.multipart.location}")
+	private String imgPath;
+	
 
 	int KEY_SIZE = 2048;
 	
@@ -214,15 +219,9 @@ public class UserService {
 	}
 	
 
-	public Map<String, String> updateUserPicture(UserVO userVO) throws IOException {
-		Map<String, String> result = new HashMap<String, String>();
-		if(!"".equals(userVO.getProfile().getOriginalFilename())) {
-			if(!FileUtil.saveFile(userVO, "D:/plogTemp")) {
-				result.put("content", "Name of file cannot contain \"..\"");
-			}
-		}
+	public void updateUserPicture(UserVO userVO, HttpServletRequest request) throws IOException {
+		FileUtil.saveFile(userVO, imgPath);
 		memberService.updateUserPicture(userVO);
-		return result;
 	}
 	
 }

@@ -57,8 +57,8 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 	
 	@PostMapping("/update")
 	@ResponseBody
-	public Map<String, String> infoUpdate(UserVO vo, MultipartRequest request) throws IOException {
-		return userService.updateUserPicture(vo);
+	public void infoUpdate(UserVO vo, HttpServletRequest request) throws IOException {
+		userService.updateUserPicture(vo, request);
 	}
 	
 //	@PostMapping("/update")
