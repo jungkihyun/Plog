@@ -30,30 +30,42 @@
 								</div>
 								<div class="my-body">
 									<div class="my-content">
-										<div class="my-picture"><input type="file" name="profile"><img class="user-img" th:src="${user.picture}"><div class="my-picture-add"><img class="plus-img" th:src="@{/img/icons/plus-circle.svg}"></div></div>
-										<table>
-											<tr>
-												<td>아이디</td>
-												<td th:text="${user.email}">ID</td>
-											</tr>
-											<tr>
-												<td>닉네임</td>
-												<td th:text="${user.username}">UserName</td>
-											</tr>
-											<tr>
-												<td>가입일</td>
-												<td th:text="${#dates.format(user.firstDate, 'yyyy-dd-MM HH:mm')}">First Date</td>
-											</tr>
-											<tr>
-												<td>최근로그인</td>
-												<td th:text="${#dates.format(user.lastDate, 'yyyy-dd-MM HH:mm')}">Last Date</td>
-											</tr>
-										</table>
-										<div class="my-footer">
-											<button type="button" class="btn btn-outline-success font-weight-bold">회원정보변경</button>
-											<button type="button" class="btn btn-outline-success font-weight-bold" data-toggle="modal" data-target="#pwChangeModal">비밀번호변경</button>
-											<button type="button" class="btn btn-outline-success font-weight-bold">로그아웃</button>
-										</div>
+										<form id="form" method="post" enctype="multipart/form-data">
+											<div class="my-picture">
+												<input type="file" name="profile" accept="image/*,.gif">
+												<img class="user-img" th:src="${user.picture}">
+												<div class="my-picture-add">
+													<img class="plus-img" th:src="@{/img/icons/plus-circle.svg}">
+												</div>
+											</div>
+											<table>
+												<tr>
+													<td>아이디</td>
+													<td th:text="${user.email}">ID</td>
+												</tr>
+												<tr>
+													<td>닉네임</td>
+													<td th:text="${user.username}">UserName</td>
+												</tr>
+												<tr>
+													<td>가입일</td>
+													<td th:text="${#dates.format(user.firstDate, 'yyyy-dd-MM HH:mm')}">First Date</td>
+												</tr>
+												<tr>
+													<td>최근로그인</td>
+													<td th:text="${#dates.format(user.lastDate, 'yyyy-dd-MM HH:mm')}">Last Date</td>
+												</tr>
+											</table>
+											<div class="my-footer">
+												<input type="hidden" id="seq" name="seq" th:value="${user.seq}">
+												<input type="hidden" id="picture" name="picture" th:value="${user.picture}">
+												<input type="hidden" id="email" name="email" th:value="${user.email}">
+												<input type="hidden" id="username" name="username" th:value="${user.username}">
+												<button type="submit" id="infoUpdateBtn" class="btn btn-outline-success font-weight-bold">회원정보변경</button>
+												<button type="button" class="btn btn-outline-success font-weight-bold" data-toggle="modal" data-target="#pwChangeModal">비밀번호변경</button>
+												<button type="button" onclick="" class="btn btn-outline-success font-weight-bold">로그아웃</button>
+											</div>
+										</form>
 									</div>
 								</div>
 							</div>
@@ -99,17 +111,6 @@
 	<!-- End of Content Wrapper -->
 
 	<script type="text/javascript">
-		$(document).on("click", ".my-footer button", function() {
-			var t = $(this).text();
-			if(t == '회원정보변경') {
-				location.href = "myinfochange.html";
-			} else if(t == '비밀번호변경') {
-				// modal
-			} else if(t == '로그아웃') {
-				location.href = "/logout";
-			}
-		})
-
 		$(document).on("click", "#pw-change-btn", function() {
 			alert($("#cur-pw").val());
 			location.href = "mypwchange.html";
@@ -119,6 +120,48 @@
 			$(".my-picture input").click();
 		})
 		
+		$(document).on("change", "input[name='profile']", function() {
+			setImageFromFile(this, '.user-img', userImageUpdate);
+		})
+		
+		// 특정요소에 첨부한 이미지 미리보기
+		function setImageFromFile(input, expression, callback) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$(expression).attr('src', e.target.result);
+					callback(expression);
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		
+		function userImageUpdate(expression) {
+			var formData = new FormData($('#form')[0]);
+			console.log(formData);
+			$.ajax({
+				type : "post",
+				url : "/user/mypage/update",
+				data: formData,
+				processData: false,
+				contentType: false,
+				cache: false,
+				async: false,
+				success : function(d) {
+					var type = d.content;
+					if(type != '' && type != undefined) {
+						$(expression).attr("src", $("#picture").val());
+						type = type.replace(/&quot;/gi, "\"");
+						$("input[name='profile']").val("");
+						alert("회원 정보 변경 실패 \n ->" + type);
+					}
+				},
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					alert(errorThrown);
+				}
+			})
+		}
 	</script>
 </th:block>
 

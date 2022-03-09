@@ -47,4 +47,10 @@
 		SET email = #{email}
 		WHERE oauth_key = #{oauthKey}
 	</update>
+	
+	<update id="updateUserPicture">
+		UPDATE member
+		SET picture = #{picture}
+		WHERE seq = #{seq}
+	</update>
 </mapper>

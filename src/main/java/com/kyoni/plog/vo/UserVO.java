@@ -1,5 +1,7 @@
 package com.kyoni.plog.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +15,7 @@ public class UserVO {
 	private String pwd;
 	private String oauthKey;
 	private String picture;
+	private MultipartFile profile;
 	
 	public UserVO() {
 		

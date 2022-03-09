@@ -11,6 +11,8 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.crypto.BadPaddingException;
@@ -30,6 +32,7 @@ import org.springframework.ui.Model;
 
 import com.kyoni.plog.enums.LoginVerify;
 import com.kyoni.plog.service.security.MemberServiceImpl;
+import com.kyoni.plog.util.FileUtil;
 import com.kyoni.plog.vo.UserVO;
 
 @Service
@@ -208,6 +211,18 @@ public class UserService {
 			bytes[(int) Math.floor(i / 2)] = value; 
 		} 
 		return bytes; 
+	}
+	
+
+	public Map<String, String> updateUserPicture(UserVO userVO) throws IOException {
+		Map<String, String> result = new HashMap<String, String>();
+		if(!"".equals(userVO.getProfile().getOriginalFilename())) {
+			if(!FileUtil.saveFile(userVO, "D:/plogTemp")) {
+				result.put("content", "Name of file cannot contain \"..\"");
+			}
+		}
+		memberService.updateUserPicture(userVO);
+		return result;
 	}
 	
 }

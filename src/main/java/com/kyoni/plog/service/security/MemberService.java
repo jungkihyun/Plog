@@ -12,5 +12,6 @@ public interface MemberService extends UserLoginService {
 	void addUser(UserVO vo);
 	UserVO getUserByEmail(String loginId);
 	void updateUserEmail(UserEntity user);
+	void updateUserPicture(UserVO vo);
 	
 }

@@ -544,7 +544,9 @@ table tbody .best-title {
 }
 
 .my-picture {
-	position: relative
+	position: relative;
+	width: 336px;
+	height: 336px;
 }
 
 .my-picture input {
@@ -552,22 +554,23 @@ table tbody .best-title {
 }
 
 .my-picture .user-img {
-	width: 50%;
-	margin: 2rem 0;
+	width: 336px;
+	height: 336px;
 }
 
 .my-picture-add {
 	position: absolute;
-	top: 30px;
-	opacity: 0.15;
-	width: 100%;
+	top: 0px;
 }
 
-.my-picture-add:hover {
-	opacity: 0.5;
-	cursor: pointer;
-}
 
 .my-picture-add .plus-img {
-	width: 50%;
+	opacity: 0.15;
+	width: 336px;
+	height: 336px;
+}
+
+.my-picture-add .plus-img:hover {
+	opacity: 0.5;
+	cursor: pointer;
 }
