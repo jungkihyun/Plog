@@ -18,7 +18,7 @@
 						<div class="card-body font-size-4">
 							<div class="row">
 								<div class="my-tap-body">
-									<div class="m-0 font-weight-bold text-success h5 active" onclick="location.href='mypage.html'">회원정보</div>
+									<div class="m-0 font-weight-bold text-success h5 active" onclick="location.href='info'">회원정보</div>
 									<div class="m-0 font-weight-bold text-success h5" onclick="location.href='myboard.html'">내가쓴글</div>
 									<div class="m-0 font-weight-bold text-success h5" onclick="location.href='myalert.html'">알림목록</div>
 									<div class="m-0 font-weight-bold text-success h5" onclick="location.href='myscrap.html'">스크랩</div>
@@ -61,8 +61,8 @@
 												<input type="hidden" id="picture" name="picture" th:value="${user.picture}">
 												<input type="hidden" id="email" name="email" th:value="${user.email}">
 												<input type="hidden" id="username" name="username" th:value="${user.username}">
-												<button type="submit" id="infoUpdateBtn" class="btn btn-outline-success font-weight-bold">회원정보변경</button>
-												<button type="button" class="btn btn-outline-success font-weight-bold" data-toggle="modal" data-target="#pwChangeModal">비밀번호변경</button>
+												<input type="hidden" id="oauthKey" th:value="${user.oauthKey}">
+												<button type="button" th:if="${user.oauthKey == ''}" class="btn btn-outline-success font-weight-bold" data-toggle="modal" data-target="#pwChangeModal">비밀번호변경</button>
 												<button type="button" onclick="" class="btn btn-outline-success font-weight-bold">로그아웃</button>
 											</div>
 										</form>
@@ -131,6 +131,7 @@
 
 				reader.onload = function(e) {
 					$(expression).attr('src', e.target.result);
+					$(".img-profile").attr("src", e.target.result);
 					callback(expression);
 				}
 				reader.readAsDataURL(input.files[0]);

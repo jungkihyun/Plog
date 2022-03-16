@@ -46,7 +46,10 @@ public class UserService {
 	private MemberServiceImpl memberService;
 	
 	@Value("${spring.servlet.multipart.location}")
-	private String imgPath;
+	private String absolutePath;
+
+	@Value("${filePath}")
+	private String relativePath;
 	
 
 	int KEY_SIZE = 2048;
@@ -220,7 +223,7 @@ public class UserService {
 	
 
 	public void updateUserPicture(UserVO userVO, HttpServletRequest request) throws IOException {
-		FileUtil.saveFile(userVO, imgPath);
+		FileUtil.saveFile(userVO, absolutePath, relativePath);
 		memberService.updateUserPicture(userVO);
 	}
 	
