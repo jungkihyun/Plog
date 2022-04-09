@@ -53,4 +53,23 @@
 		SET picture = #{picture}
 		WHERE seq = #{seq}
 	</update>
+
+	<update id="updateUsername">
+		UPDATE member
+		SET username = #{username}
+		WHERE seq = #{seq}
+	</update>
+	
+	<select id="pwCheck" resultType="UserVO">
+		SELECT count(*) as cnt
+		FROM member
+		WHERE seq = #{seq}
+	</select>
+	
+	<update id="updatePassword">
+		UPDATE member
+		SET pwd = #{pwd}
+		WHERE seq = #{seq}
+	</update>
+	
 </mapper>

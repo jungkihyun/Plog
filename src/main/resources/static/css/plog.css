@@ -574,3 +574,25 @@ table tbody .best-title {
 	opacity: 0.5;
 	cursor: pointer;
 }
+
+.usernameTd:hover {
+	cursor: pointer;
+	background: #f4f4f4;
+}
+
+.usernameInput {
+	display:none;
+}
+.usernameInput input {
+	width: 60%!important;
+	float: left;
+}
+.usernameInput button {
+	width: 14%;
+	float: left;
+	margin: 0 0 0 0.1rem;
+}
+
+.input-section {
+	margin: 0.5rem;
+}

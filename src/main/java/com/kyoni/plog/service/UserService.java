@@ -31,6 +31,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.kyoni.plog.domain.UserEntity;
 import com.kyoni.plog.enums.LoginVerify;
 import com.kyoni.plog.service.security.MemberServiceImpl;
 import com.kyoni.plog.util.FileUtil;
@@ -222,9 +223,52 @@ public class UserService {
 	}
 	
 
-	public void updateUserPicture(UserVO userVO, HttpServletRequest request) throws IOException {
+	public void updateUserPicture(UserVO userVO) throws IOException {
 		FileUtil.saveFile(userVO, absolutePath, relativePath);
 		memberService.updateUserPicture(userVO);
+	}
+
+	public void updateUsername(UserVO userVO) throws IOException {
+		memberService.updateUsername(userVO);
+	}
+
+	public Map<String, Object> pwCheck(UserVO userVO, HttpSession session) throws IOException, ServletException {
+		Map<String, Object> result = new HashMap<String, Object>();
+		String dpw = decryptRSA((PrivateKey) session.getAttribute("__rsaPrivateKey__"), userVO.getPwd());
+		if(!patternCheck(dpw, "PW")) {
+			result.put("status", "error");
+			result.put("message", "비밀번호를 다시 확인해주세요.");
+			return result;
+		}
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("email", userVO.getEmail());
+		map.put("oauthKey", userVO.getOauthKey());
+		
+		UserEntity userEntity = memberService.getUser(map);
+		if(passwordEncoder.matches(dpw, userEntity.getPwd())) {
+			result.put("cnt", "1");
+		} else {
+			result.put("cnt", "0");
+			result.put("message", "비밀번호가 일치하지 않습니다.");
+		}
+		result.put("status", "ok");
+		return result;
+	}
+	
+	public Map<String, Object> updatePassword(UserVO userVO, HttpSession session) throws ServletException, IOException {
+		Map<String, Object> result = new HashMap<String, Object>();
+		LoginVerify lv = registerInputVerify(userVO, session);
+		if(lv != LoginVerify.OK) {
+			result.put("status", "error");
+			if(lv == LoginVerify.EMAIL) {
+				result.put("message", "아이디는 변경할 수 없습니다.");
+				return result;
+			} else if(lv == LoginVerify.USERNAME) {
+				
+			}
+		}
+		memberService.updatePassword(userVO);
 	}
 	
 }

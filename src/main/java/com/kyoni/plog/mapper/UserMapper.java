@@ -21,4 +21,7 @@ public interface UserMapper {
 	void addAuthority(int seq);
 	int getLastIndex();
 	void updateUserPicture(UserVO vo);
+	void updateUsername(UserVO vo);
+	Integer pwCheck(UserVO vo);
+	void updatePassword(UserVO vo);
 }

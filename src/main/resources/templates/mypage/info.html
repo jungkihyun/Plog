@@ -33,7 +33,8 @@
 										<form id="form" method="post" enctype="multipart/form-data">
 											<div class="my-picture">
 												<input type="file" name="profile" accept="image/*,.gif">
-												<img class="user-img" th:src="@{${user.picture}}">
+												<img class="user-img" th:if="${user.picture == ''}" th:src="@{/img/undraw_profile.svg}">
+												<img class="user-img" th:if="${user.picture != ''}" th:src="${user.picture}">
 												<div class="my-picture-add">
 													<img class="plus-img" th:src="@{/img/icons/plus-circle.svg}">
 												</div>
@@ -45,7 +46,14 @@
 												</tr>
 												<tr>
 													<td>닉네임</td>
-													<td th:text="${user.username}">UserName</td>
+													<td class="usernameTd">
+														<span class="usernameField" id="dispalyUsername" th:text="${user.username}">UserName</span>
+														<span class="usernameInput">
+															<input type="text" class="form-control form-control-user" id="modifyUsername" th:value="${user.username}">
+															<button type="button" class="btn btn-success btn-user" id="okBtn"><i class="fa-solid fa-v"></i></button>
+															<button type="button" class="btn btn-secondary btn-user" id="xBtn"><i class="fa-solid fa-x"></i></button>
+														</span>
+													</td>
 												</tr>
 												<tr>
 													<td>가입일</td>
@@ -61,8 +69,9 @@
 												<input type="hidden" id="picture" name="picture" th:value="${user.picture}">
 												<input type="hidden" id="email" name="email" th:value="${user.email}">
 												<input type="hidden" id="username" name="username" th:value="${user.username}">
+												<input type="hidden" id="password" name="pwd" th:value="${user.pwd}">
 												<input type="hidden" id="oauthKey" th:value="${user.oauthKey}">
-												<button type="button" th:if="${user.oauthKey == ''}" class="btn btn-outline-success font-weight-bold" data-toggle="modal" data-target="#pwChangeModal">비밀번호변경</button>
+												<button type="button" id="pw-change-modal-btn" th:if="${user.oauthKey == ''}" class="btn btn-outline-success font-weight-bold" data-toggle="modal" data-target="#pwChangeModal">비밀번호변경</button>
 												<button type="button" onclick="" class="btn btn-outline-success font-weight-bold">로그아웃</button>
 											</div>
 										</form>
@@ -90,15 +99,24 @@
 							</button>
 						</div>
 						<div class="modal-body">
-							<form class="form-group">
-								<div class="input-group">
+							<input type="hidden" id="pw-change-mode" value="0">
+							<div class="input-group" id="pw-check-section">
+								<div class="input-group input-section">
 									<input type="password" class="form-control" id="cur-pw" placeholder="현재 비밀번호를 입력하세요.">
 								</div>
-							</form>
+							</div>
+							<div class="input-group" id="pw-change-section" style="display: none;">
+								<div class="input-group input-section">
+									<input type="password" class="form-control" id="change-pw" placeholder="변경할 비밀번호를 입력하세요.">
+								</div>
+								<div class="input-group input-section">
+									<input type="password" class="form-control" id="change-pw-check" placeholder="변경할 비밀번호를 다시 입력하세요.">
+								</div>
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-success" id="pw-change-btn">확인</button>
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+							<button type="button" class="btn btn-secondary" id="pw-clasw-btn" data-dismiss="modal">취소</button>
 						</div>
 					</div>
 				</div>
@@ -111,9 +129,73 @@
 	<!-- End of Content Wrapper -->
 
 	<script type="text/javascript">
+		var publicKeyModules = "[[${publicKeyModules}]]";
+		var publicKeyExponent = "[[${publicKeyExponent}]]";
+		
+		$(document).on("click", "#pw-clasw-btn", function() {
+			$("#pw-change-mode").val("0");
+		})
+		
 		$(document).on("click", "#pw-change-btn", function() {
-			alert($("#cur-pw").val());
-			location.href = "mypwchange.html";
+			if($("#pw-change-mode").val() == "0") {
+				if(validateEncryptedForm($("#cur-pw").val()) == false) {
+					return false;
+				}
+				form.password.value = securedPassword;
+				var formData = new FormData($('#form')[0]);
+				$.ajax({
+					type : "post",
+					url : "/user/mypage/pwCheck",
+					data: formData,
+					processData: false,
+					contentType: false,
+					cache: false,
+					async: false,
+					success : function(d) {
+						if(d.status == "error") {
+							alert(d.message);
+						} else {
+							if(d.cnt == "0") {
+								alert(d.message);
+							} else {
+								$("#pw-check-section").hide("fast");
+								$("#pw-change-section").show("fast");
+								$("#pw-change-mode").val("1");
+							}
+						}
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(errorThrown);
+					}
+				})
+			} else {
+				if($("#change-pw").val() != $("#change-pw-check").val()) {
+					alert("비밀번호가 일치하지 않습니다.");
+					return false;
+				} else {
+					if(validateEncryptedForm($("#change-pw").val()) == false) {
+						return false;
+					}
+					form.password.value = securedPassword;
+					var formData = new FormData($('#form')[0]);
+					$.ajax({
+						type : "post",
+						url : "/user/mypage/updatePassword",
+						data: formData,
+						processData: false,
+						contentType: false,
+						cache: false,
+						async: false,
+						success : function(d) {
+							alert("비밀번호가 성공적으로 변경되었습니다.");
+							$("#pw-clasw-btn").click();
+						},
+						error : function(XMLHttpRequest, textStatus, errorThrown) {
+							alert(errorThrown);
+						}
+					})
+				}
+			}
 		})
 		
 		$(document).on("click", ".my-picture-add", function() {
@@ -122,6 +204,50 @@
 		
 		$(document).on("change", "input[name='profile']", function() {
 			setImageFromFile(this, '.user-img', userImageUpdate);
+		})
+		
+		$(document).on("click", ".usernameTd", function() {
+			$(".usernameField").hide();
+			$(".usernameInput").show();
+		})
+		
+		$(document).on("click", "#xBtn", function(event) {
+			 event.stopPropagation();
+			$(".usernameField").show();
+			$(".usernameInput").hide();
+		})
+		
+		$(document).on("click", "#okBtn", function(event) {
+			 event.stopPropagation();
+			 if($("#modifyUsername").val() == $("#username").val()) {
+				 alert("닉네임을 확인해주세요.");
+				 return false;
+			 }
+			 if(confirm("닉네임을 변경 하시겠습니까?")) {
+				 if(!getLengthCheck($("#username").val(), 2, 12)) {
+					 alert(getLengthText("닉네임", 1, 2, 12))
+					 return false;
+				 }
+			 }
+			$("#username").val($("#modifyUsername").val());
+				var formData = new FormData($('#form')[0]);
+				$.ajax({
+					type : "post",
+					url : "/user/mypage/updateUsername",
+					data: formData,
+					processData: false,
+					contentType: false,
+					cache: false,
+					async: false,
+					success : function(d) {
+						$("#dispalyUsername").text($("#username").val());
+						$(".usernameField").show();
+						$(".usernameInput").hide();
+					},
+					error : function(XMLHttpRequest, textStatus, errorThrown) {
+						alert(errorThrown);
+					}
+				})
 		})
 		
 		// 특정요소에 첨부한 이미지 미리보기
@@ -143,7 +269,7 @@
 			console.log(formData);
 			$.ajax({
 				type : "post",
-				url : "/user/mypage/update",
+				url : "/user/mypage/updateImage",
 				data: formData,
 				processData: false,
 				contentType: false,

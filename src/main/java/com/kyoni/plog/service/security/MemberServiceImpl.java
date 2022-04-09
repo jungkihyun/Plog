@@ -63,4 +63,19 @@ public class MemberServiceImpl implements MemberService {
 		userMapper.updateUserPicture(vo);
 	}
 
+	@Override
+	public void updateUsername(UserVO vo) {
+		userMapper.updateUsername(vo);
+	}
+
+	@Override
+	public Integer pwCheck(UserVO vo) {
+		return userMapper.pwCheck(vo);
+	}
+	
+	@Override
+	public void updatePassword(UserVO vo) {
+		userMapper.updatePassword(vo);
+	}
+
 }

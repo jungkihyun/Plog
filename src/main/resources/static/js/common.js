@@ -114,11 +114,11 @@ var securedPassword = '';
 /*
 RSA 암호화
 */
-function validateEncryptedForm() {
+function validateEncryptedForm(value) {
 	try {
 		var rsa = new RSAKey();
 		rsa.setPublic(publicKeyModules, publicKeyExponent);
-		securedPassword = rsa.encrypt($("#password").val());
+		securedPassword = rsa.encrypt(value);
 	} catch(err) {
 		alert(err);
 		return false;

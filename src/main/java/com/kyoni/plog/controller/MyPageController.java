@@ -1,11 +1,15 @@
 package com.kyoni.plog.controller;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -43,7 +47,7 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 	private UserService userService;
 
 	@GetMapping("/info")
-	public String infoPage(HttpSession session, Model model) {
+	public String infoPage(HttpSession session, Model model, HttpServletRequest request, HttpServletResponse response) throws NoSuchAlgorithmException, InvalidKeySpecException, ServletException, IOException {
 		SessionUser su = (SessionUser) session.getAttribute("user");
 		
 		if(su != null) {
@@ -52,13 +56,33 @@ private static final Logger logger = LoggerFactory.getLogger(UserController.clas
 			map.put("oauthKey", su.getOauthKey());
 			model.addAttribute("user", memberService.getUser(map));
 		}
+		userService.createKeyPair(request, response, model);
 		return "mypage/info";
 	}
 	
-	@PostMapping("/update")
+	@PostMapping("/updateImage")
 	@ResponseBody
-	public void infoUpdate(UserVO vo, HttpServletRequest request) throws IOException {
-		userService.updateUserPicture(vo, request);
+	public void infoUpdateImage(UserVO vo) throws IOException {
+		userService.updateUserPicture(vo);
+	}
+
+	@PostMapping("/updateUsername")
+	@ResponseBody
+	public void infoUpdateUsername(UserVO vo) throws IOException {
+		userService.updateUsername(vo);
+	}
+
+	@PostMapping("/pwCheck")
+	@ResponseBody
+	public Map<String, Object> infoPwCheck(UserVO vo, HttpSession session) throws IOException, ServletException {
+		
+		return userService.pwCheck(vo, session);
+	}
+
+	@PostMapping("/updatePassword")
+	@ResponseBody
+	public Map<String, Object> updatePassword(UserVO vo, HttpSession session) throws IOException, ServletException {
+		return userService.updatePassword(vo, session);
 	}
 	
 //	@PostMapping("/update")
